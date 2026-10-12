@@ -73,6 +73,7 @@ python -m PyInstaller --noconfirm --windowed --name 划词翻译 --exclude-modul
 
 | 日期 | 变更 |
 |---|---|
+| 2026-10-12 | 发布 GitHub Release v1.0.0：https://github.com/caopu1212/myTranslate/releases/tag/v1.0.0 ，附件 `myTranslate-win64.zip`（106.5MB，exe 开箱即用）。流程：本机用 winget 装 gh 2.102.0，`gh auth login --web` 由用户在浏览器授权；zip 超过仓库单文件 100MB 上限，只能走 Release。**踩坑**：GitHub 会把附件名里的非 ASCII 字符直接丢掉（「划词翻译-win64.zip」变成「-win64.zip」），所以附件必须用 ASCII 文件名；已删除错误命名的附件，下载链接实测 200 且大小一致。仓库为 PUBLIC，Release 说明里已提示 exe 未签名可能被拦截/误报。以后发新版：重新打包 → 复制成 ASCII 名 zip → `gh release create vX.Y.Z <zip> --notes-file ...` |
 | 2026-10-12 | 新增 `README.md`（功能、快速开始[源码/打包]、配置表、本地模型用法、费用、已知限制、项目结构）并推送 |
 | 2026-10-12 | 已推送到 GitHub：https://github.com/caopu1212/myTranslate （分支 main，提交作者用 noreply 邮箱 `caopu1212@users.noreply.github.com`，仅本仓库配置）。`.gitignore` 排除 config.json / usage.jsonl / build / dist / 发布 / *.zip；推送前扫描过源码文档无密钥。本机无 gh CLI，建库由用户在网页完成，推送走本机已有 Git 凭据。内网 IP 在 PLAN 中已脱敏 |
 | 2026-10-11 | ①浮窗新增「总结」按钮（与「讲解」并列，对当前原文重跑）：`mode=summary`，用 target_lang 写「一句话总结 + 3～6 条要点」，temperature 0.3、max_tokens 2048，复用富文本渲染；`stream_translate(..., mode)` 取代原 learn 布尔参数（translate / learn / summary）。用 ICIJ 长文实测（本地 qwen）输出准确、截图验证排版。②每个模型服务各存一份配置：config 新增 `provider` + `profiles{服务名:{base_url,api_key,model}}`，设置窗口切换服务时先暂存当前填写、再载入该服务各自保存的内容（没有则用预设）；旧版顶层 base_url/api_key/model 自动迁移成一份 profile；用脚本模拟「DeepSeek↔本地」来回切换+保存，内容互不覆盖。**事故**：此前切到本地模型时界面直接覆盖了同一组 api_key/base_url 输入框，用户的 DeepSeek key 在 config 中被本地 key 顶掉（APPDATA 里现为 base_url=LAN、api_key=本地 key），无法恢复，需用户重填 DeepSeek key；我的测试脚本也因此读到错误 key 得到 401 |
