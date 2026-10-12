@@ -1,0 +1,5 @@
+{
+  "api_key": "sk-xxxx（也可改用环境变量 DEEPSEEK_API_KEY）",
+  "target_lang": "简体中文",
+  "hotkey": "ctrl+alt+t"
+}
